@@ -4,27 +4,10 @@ title: About
 ---
 
 <p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
+  This is just a message to display!!! Will edit it as I complete rest of the stuff!!
 </p>
 
-In the novel, *The Strange Case of Dr. Jeykll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
-
-There are currently two themes built on Poole:
-
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
-
-Learn more and contribute on [GitHub](https://github.com/poole).
-
-## Setup
-
-Some fun facts about the setup of this project include:
-
-* Built for [Jekyll](http://jekyllrb.com)
-* Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-* Coded with [Sublime Text 2](http://sublimetext.com), an amazing code editor
-* Designed and developed while listening to music like [Blood Bros Trilogy](https://soundcloud.com/maddecent/sets/blood-bros-series)
-
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
+Currently working as Security Engineer at Intuit Inc, Mountain View, California. As part of my day-to-day job I work on deploying security solutions at Intuit which focuses on maintaining user's Identity and Access for various Intuit applications. I completed my Masters at Arizona State University with major as Computer Science and Information Assurance as concentration study.
+My job & research interests are in information security and developing automated tools to harvest vulnerabilities in web applications. I am also passionate about things revolving around information security like Malware analysis, Penetration testing, Mobile application security testing, deploying security solutions into an organization.
 
 Thanks for reading!
