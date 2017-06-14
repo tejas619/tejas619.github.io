@@ -13,7 +13,7 @@ Toward Inductive Reverse Engineering of Web Applications
 
 
 <h2><b>Threat Intelligence and Analytics</b></h2>
-<p>In this research work we propose an Automated Threat Intelligence fuSion framework (ATIS) that is able to take all sorts threat sources into account and discover new intelligence by connecting the dots of apparently isolated cyber events. Our framework consists of various intelligence modules viz., IOC module, Malware Analysis module, Bitcoin module, Social dynamics module.<br>
+<p>In this research work we propose an Automated Threat Intelligence fuSion framework (ATIS) that is able to take all sorts threat sources into account and discover new intelligence by connecting the dots of apparently isolated cyber events. Our framework consists of various intelligence modules viz., IOC module, Malware Analysis module, Bitcoin module, Social dynamics module.</p>
 
-[Toward Inductive Reverse Engineering of Web Applications](http://sefcom.asu.edu/publications/towards-automated-threat-intelligence-fusion-cic2016.pdf)
-Ajay Modi, Zhibo Sun, Anupam Panwar, <b>Tejas Khairnar</b>, Ziming Zhao, [Dr. Adam Doupe](http://adamdoupe.com), [Gail-Joon Ahn](http://www.public.asu.edu/~gahn1/), Paul Black
+[Toward Automated Threat Intelligence Fusion](http://sefcom.asu.edu/publications/towards-automated-threat-intelligence-fusion-cic2016.pdf)
+Ajay Modi, Zhibo Sun, Anupam Panwar, <b>[Tejas Khairnar](http://tejas619.github.io)</b>, Ziming Zhao, [Dr. Adam Doupe](http://adamdoupe.com), [Dr. Gail-Joon Ahn](http://www.public.asu.edu/~gahn1/), Paul Black
