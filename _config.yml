@@ -12,10 +12,11 @@ baseurl:             ''
 paginate:            5
 
 # About/contact
-author:
+author:            
   name:              Tejas Khairnar
   url:               https://twitter.com/khts123
   email:             tkhairna@asu.edu
+  gravatar_md5:      8c160e36fc9adedbb3a8ae40ca8c6d80
 
 # Custom vars
 version:             1.0.0
