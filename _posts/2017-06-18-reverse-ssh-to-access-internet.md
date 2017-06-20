@@ -30,25 +30,29 @@ Here ssh-keygen unix based utility generates authentication keys for ssh. Using 
 ssh-copy-id -i ~/.ssh/id_rsa.pub user@publicip
 </p>
 Here we copy the key we generated for the work machine into the home machine. The user will be the users who are allowed access to your home machine. The "publicip" thing I will exaplin further.<br> 
+
 **Disable Password Access**<br>
 		Now that we have configured keys in order to ssh into home machine we can disable the password based access. This prevents us from the password bruteforce attacks.
 		The password access can be disabled by: <br>
 		<p class="message">
 		#PasswordAuthentication yes
 		PasswordAuthentication no
-		</p><
+		</p>
+
 **Disable RootLogin**<br>
 		We should not allow root users to login via ssh. This can be done by: <br>
 		<p class="message">
 		#PermitRootLogin no
 		PermitRootLogin no
 		</p>
+
 **Limit the number of users that can ssh into your home machine** <br>
 		We can achieve this by adding a line into sshd_config file about allowing specific users or specific group of users to login via ssh.
 		This can be done by adding this line at the end of sshd_config: <br>
 		<p class="message">
 		AllowUsers user1 user2
 		</p>
+		
 **Using ssh protocol 2** <br>
 		SSh protocol 1 has number of security vulnerabilities of which exploits are available publicly. Hence we should only use ssh protocol 2 for our purpose.
 		This can be done by uncommenting the protocol line in sshd_config and mentioning the number '2'.
