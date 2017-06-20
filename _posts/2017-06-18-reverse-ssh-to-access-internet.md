@@ -21,26 +21,36 @@ You should make the following changes to implement some level of secuirty for yo
 
 1. Use public/private key pairs for authentication instead of passwords <br>
 	A. Generate a passphrase-protected SSH key for every computer that need access to the ssh home machine. In our case we will create this on our work machine. <br>
-		ssh-keygen -t rsa -b 2048 -v
+		<p class="message">
+		ssh-keygen -t rsa -b 2048 -v 
+		</p>
 		Here ssh-keygen unix based utility generates authentication keys for ssh. Using -t option you can specify the type of key to create. I am specifying RSA as cryptography type for my ssh-key because RSA algorithm is right now compatible with most of the ssh versions and -b option to specify the number of bits to be generated. 2048 bit RSA key is pretty strong against factoring of RSA modulus. I use -v to get pretty messages about the key generation. Btw, its verbose. <br>
+		<p class="message">
 		ssh-copy-id -i ~/.ssh/id_rsa.pub user@publicip
+		</p>
 		Here we copy the key we generated for the work machine into the home machine. The user will be the users who are allowed access to your home machine. The "publicip" thing I will exaplin further. 
 
 	B. Disable Password Access <br>
 		Now that we have configured keys in order to ssh into home machine we can disable the password based access. This prevents us from the password bruteforce attacks.
 		The password access can be disabled by: <br>
+		<p class="message">
 		#PasswordAuthentication yes
 		PasswordAuthentication no
+		</p>
 
 	C. Disable RootLogin <br>
 		We should not allow root users to login via ssh. This can be done by: <br>
+		<p class="message">
 		#PermitRootLogin no
 		PermitRootLogin no
+		</p>
 
 	D. Limit the number of users that can ssh into your home machine <br>
 		We can achieve this by adding a line into sshd_config file about allowing specific users or specific group of users to login via ssh.
 		This can be done by adding this line at the end of sshd_config: <br>
+		<p class="message">
 		AllowUsers user1 user2
+		</p>
 
 	E. Using ssh protocol 2 <br>
 		SSh protocol 1 has number of security vulnerabilities of which exploits are available publicly. Hence we should only use ssh protocol 2 for our purpose.
@@ -67,10 +77,12 @@ There are many ways to achieve this, but the first thought ways are as:
 	In order to make this work we have to login into the management console of the home router and make the configuration. 
 	For me the configuration tab was in the advanced networking mode. <br>
 	Here you need to add: <br>
-	"Service Name" = ssh(22) <br>
-	"Action" = Allow <br>
-	"LAN IP Address" = <IP address of your home machine> <br>
-	"WAN IP Address" = Any (You can spcify the public IP of your office network to be more secure) <br>
+	<p class="message">
+	"Service Name" = ssh(22)
+	"Action" = Allow 
+	"LAN IP Address" = <IP address of your home machine> 
+	"WAN IP Address" = Any (You can spcify the public IP of your office network to be more secure)
+	</p>
 
 2. DMZ
 	Demilitiarized Zone is a physical of logical sub-network that separates an internal local area network(LAN) from other untrusted networks, usually the Internet[http://searchsecurity.techtarget.com/definition/DMZ]. This means that the machines/servers in the DMZ are accessible from the outside network. To achieve our goal, instead of port forwarding, we can make you machine sit in the DMZ so that it will be publicly accessible. BUT, there is a big but here, as you might have guessed making your machine publicly avaible doesn't sound much secure. You are right. It would not be secure. Hence, let's stop this discussion here. <br>
