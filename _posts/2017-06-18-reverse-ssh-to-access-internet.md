@@ -35,13 +35,13 @@ Here we copy the key we generated for the work machine into the home machine. Th
 Now that we have configured keys in order to ssh into home machine we can disable the password based access. This prevents us from the password bruteforce attacks.
 The password access can be disabled by:<br>
 <p class="message">
-\#PasswordAuthentication yes<br>
+#PasswordAuthentication yes<br>
 PasswordAuthentication no
 </p>
 **Disable RootLogin**<br>
 We should not allow root users to login via ssh. This can be done by: <br>
 <p class="message">
-\#PermitRootLogin no <br>
+#PermitRootLogin no <br>
 PermitRootLogin no
 </p>
 **Limit the number of users that can ssh into your home machine** <br>
