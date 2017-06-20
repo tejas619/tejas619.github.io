@@ -21,15 +21,15 @@ Just follow the instructions and OpenSSH-server will be installed on your linux 
 Now, we also have to secure the ssh service we just started on our machine. All the configuration related to ssh service are in the file "sshd_config". Any changes made in this file are the changes made for the ssh service.
 You should make the following changes to implement some level of secuirty for your ssh service. (These changes are mostly generic for ssh service keeping aside the platform)
 **Use public/private key pairs for authentication instead of passwords**
-* Generate a passphrase-protected SSH key for every computer that need access to the ssh home machine. In our case we will create this on our work machine.
-	<p class="message">
-	ssh-keygen -t rsa -b 2048 -v 
-	</p>
-		Here ssh-keygen unix based utility generates authentication keys for ssh. Using -t option you can specify the type of key to create. I am specifying RSA as cryptography type for my ssh-key because RSA algorithm is right now compatible with most of the ssh versions and -b option to specify the number of bits to be generated. 2048 bit RSA key is pretty strong against factoring of RSA modulus. I use -v to get pretty messages about the key generation. Btw, its verbose. <br>
-		<p class="message">
-		ssh-copy-id -i ~/.ssh/id_rsa.pub user@publicip
-		</p>
-		Here we copy the key we generated for the work machine into the home machine. The user will be the users who are allowed access to your home machine. The "publicip" thing I will exaplin further.<br> 
+Generate a passphrase-protected SSH key for every computer that need access to the ssh home machine. In our case we will create this on our work machine.
+<p class="message">
+ssh-keygen -t rsa -b 2048 -v 
+</p>
+Here ssh-keygen unix based utility generates authentication keys for ssh. Using -t option you can specify the type of key to create. I am specifying RSA as cryptography type for my ssh-key because RSA algorithm is right now compatible with most of the ssh versions and -b option to specify the number of bits to be generated. 2048 bit RSA key is pretty strong against factoring of RSA modulus. I use -v to get pretty messages about the key generation. Btw, its verbose. <br>
+<p class="message">
+ssh-copy-id -i ~/.ssh/id_rsa.pub user@publicip
+</p>
+Here we copy the key we generated for the work machine into the home machine. The user will be the users who are allowed access to your home machine. The "publicip" thing I will exaplin further.<br> 
 **Disable Password Access**<br>
 		Now that we have configured keys in order to ssh into home machine we can disable the password based access. This prevents us from the password bruteforce attacks.
 		The password access can be disabled by: <br>
@@ -55,8 +55,10 @@ You should make the following changes to implement some level of secuirty for yo
 
 ## Knowning your public IP address 
 Now that we have our SSH service running on our home machine we can move ahead on how to access your home machine from work place. The first and foremost requirement in order to achieve this is to know the Public IP of your home network. I am assuming that you have a router placed at your home to which all your devices are connected. There are many ways in order to find the Public IP of your router. The following are two of my ways:
+
 *  Login into your router. <br>
 	This is the most geneuine way inorder to know the details of the internet connection you are using at your home. For me the IP details were in the "Internet Port" tab of the management console.<br> 
+
 *  [https://www.whatismyip.com/]<br>
 
 ## Configuring your router
@@ -64,17 +66,17 @@ We know the Public IP of our router now. Lets go ahead with some network related
 Public IP's are accessible from everywhere in the world. That's why they are called Public. :)
 But your home machine is NATted behind your router. By this I mean that your router performs some kind of address translation from PrivateIP > PublicIP and vice versa whenever you access internet at home. You can verfiy this by checking your IP address configuration. It would be most probably start with "192.168". Now, the question is, how will our router recognize that I want to access which device on myhome network? <br>
 There are many ways to achieve this, but the first thought ways are as:<br>
-**Port Forwarding**
-	"A port forward is a way of making a computer on your home or business network accessible to computers on the internet, even though they are behind a router. (https://portforward.com/)"
-	In order to make this work we have to login into the management console of the home router and make the configuration. 
-	For me the configuration tab was in the advanced networking mode. <br>
-	Here you need to add: <br>
-	<p class="message">
-	"Service Name" = ssh(22) <br>
-	"Action" = Allow <br>
-	"LAN IP Address" = <IP address of your home machine> <br>
-	"WAN IP Address" = Any (You can spcify the public IP of y our office network to be more secure) <br>
-	</p>
+**Port Forwarding**<br>
+"A port forward is a way of making a computer on your home or business network accessible to computers on the internet, even though they are behind a router. (https://portforward.com/)"
+In order to make this work we have to login into the management console of the home router and make the configuration. 
+For me the configuration tab was in the advanced networking mode. <br>
+Here you need to add: <br>
+<p class="message">
+"Service Name" = ssh(22) <br>
+"Action" = Allow <br>
+"LAN IP Address" = IP address of your home machine <br>
+"WAN IP Address" = Any (You can spcify the public IP of y our office network to be more secure) <br>
+</p>
 **DMZ**
 	Demilitiarized Zone is a physical of logical sub-network that separates an internal local area network(LAN) from other untrusted networks, usually the Internet[http://searchsecurity.techtarget.com/definition/DMZ]. This means that the machines/servers in the DMZ are accessible from the outside network. To achieve our goal, instead of port forwarding, we can make you machine sit in the DMZ so that it will be publicly accessible. BUT, there is a big but here, as you might have guessed making your machine publicly avaible doesn't sound much secure. You are right. It would not be secure. Hence, let's stop this discussion here. <br>
 	But if anyone want to configure there machine to reside in the DMZ, you can do so by sepcifyinh your private IP into the router DMZ tab. After that the router will take care of it. (Again, I am assuming that your router supports DMZ setup)<br>
