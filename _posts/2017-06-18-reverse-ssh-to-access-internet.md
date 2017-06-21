@@ -88,6 +88,30 @@ But if anyone want to configure there machine to reside in the DMZ, you can do s
 While performing port forwarding configuration when I say "IP address of your machine", you might question that my router leases IP using DHCP. Then how can I gurantee that every time I will have the same private IP adress? True. This can be a problem all the time. But, thanks to Dynamic DNS service. Dynamic DNS is a method of autmatically updating a name server in the DNS. So basically the only thing you have to understand is that it will provide you with a constant domain name for your local machine even though it will have different IP's. This can be configured on your router once you have the name configured using services like [noip](https://www.noip.com/free).
 
 ## SSH Reverse tunneling
+In order to achieve the goal of bypassing corporate firewall, we use the technique of SSH Reverse Tunneling. Generally corporate firewalls are desgined to block any incoming connections from outside network. Also, for security purposes many social media websites are blocked on the firewall. But, many times a connection going from inside to outside is not blocked. Otherwise, it will be difficult to work. Right? 
+Hence, we leverage this to our advantage and in this technique we try to open a connection from inside to outside.
+In order to make a SSH reverse tunnel to your home PC use the below command: 
+<p class="message">
+ssh -R 4444:localhost:22 user@publicip
+</p>
+The -R option in above command will forward the give port on remote server to the given host and port on local side. In the above command, we use 4444 as the port on our home machine to connect back to our work machine. "user@publicip" means you are connecting to your home machine. 
+Now, from your home machine you have to connect back to the office machine using the tunnel established. This time you will be able to connect because a legitimate port is open through the corporate firewall from inside to outside. 
+<p class="message">
+ssh -p 4444 user@localhost
+</p>
+This way you are connecting back to the work machine through the tunnel.
+Now that the tunnel is established, in order to browse the blocked website we have to setup something called as SOCKS proxy on our browser. 
+In order to do so, 
+<p class="message">
+open "Mozilla-firefox"<br>
+go-to "preferences"<br>
+click "advanced"<br>
+"Network" > "Settings" > "SOCKS Host" > localhost: "Port" > 4444
+</p>
+Now all the traffice from this browser will get tunnel through the SSH reverse tunnel we established and will go via your home internet. 
+This will enable us to access all the blocked websites with ease.
+
+## SSH reverse tunneling technique is highly monitored in coportate networks. Your coporate IT team might not like it. Please think twice before performing this. I have written this blog post only to learn more about this technique. Hope this helps. :) :)
 
 
 
