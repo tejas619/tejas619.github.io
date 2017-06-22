@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Home Page</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2017-06-22T11:23:25-07:00</updated>
+ <id>http://localhost:4000</id>
+ <author>
+   <name>Tejas Khairnar</name>
+   <email>tkhairna@asu.edu</email>
+ </author>
+
+ 
+ <entry>
+   <title>How to SSH into home computer from Work network</title>
+   <link href="http://localhost:4000/2017/06/18/reverse-ssh-to-access-internet/"/>
+   <updated>2017-06-18T00:00:00-07:00</updated>
+   <id>http://localhost:4000/2017/06/18/reverse-ssh-to-access-internet</id>
+   <content type="html">&lt;p&gt;Every company has some kind of internet access policy in order to keep their network secure. According to this policy sometimes you cannot access social media websites like facebook, instagram etc. In this blog post I will guide you on how to ssh into your home computer and access blocked websites at your workplace leveraging the same. &lt;em&gt;** Violation of Company’s security policy can cost you **&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-ssh-on-your-home-machine&quot;&gt;Installing ssh on your home machine&lt;/h2&gt;
+
+&lt;p&gt;For Mac Users:&lt;br /&gt;
+Its pretty straight forward. Go to “System Preferences” &amp;gt; “Sharing” &amp;gt; “Remote login”. Enable remote login for particular usrers on the Mac. Some of the configurations related to securing ssh are explained later in this post.&lt;/p&gt;
+
+&lt;p&gt;For Linux Users:&lt;br /&gt;
+Follow the following commands in order to install OpenSSH-Server on your linux box.&lt;br /&gt;&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt; 
+sudo apt-get install openssh-server
+&lt;/p&gt;
+&lt;p&gt;Just follow the instructions and OpenSSH-server will be installed on your linux box.&lt;/p&gt;
+
+&lt;h2 id=&quot;securing-ssh-service&quot;&gt;Securing SSH service&lt;/h2&gt;
+&lt;p&gt;Now, we also have to secure the ssh service we just started on our machine. All the configuration related to ssh service are in the file “sshd_config”. Any changes made in this file are the changes made for the ssh service.
+You should make the following changes to implement some level of secuirty for your ssh service. (These changes are mostly generic for ssh service keeping aside the platform) &lt;br /&gt;
+&lt;strong&gt;Use public/private key pairs for authentication instead of passwords&lt;/strong&gt;
+Generate a passphrase-protected SSH key for every computer that need access to the ssh home machine. In our case we will create this on our work machine.&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+ssh-keygen -t rsa -b 2048 -v 
+&lt;/p&gt;
+&lt;p&gt;Here ssh-keygen unix based utility generates authentication keys for ssh. Using -t option you can specify the type of key to create. I am specifying RSA as cryptography type for my ssh-key because RSA algorithm is right now compatible with most of the ssh versions and -b option to specify the number of bits to be generated. 2048 bit RSA key is pretty strong against factoring of RSA modulus. I use -v to get pretty messages about the key generation. Btw, its verbose. &lt;br /&gt;&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+ssh-copy-id -i ~/.ssh/id_rsa.pub user@publicip
+&lt;/p&gt;
+&lt;p&gt;Here we copy the key we generated for the work machine into the home machine. The user will be the users who are allowed access to your home machine. The “publicip” thing I will exaplin further.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Disable Password Access&lt;/strong&gt;&lt;br /&gt;
+Now that we have configured keys in order to ssh into home machine we can disable the password based access. This prevents us from the password bruteforce attacks.
+The password access can be disabled by:&lt;br /&gt;&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+#PasswordAuthentication yes&lt;br /&gt;
+PasswordAuthentication no
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Disable RootLogin&lt;/strong&gt;&lt;br /&gt;
+We should not allow root users to login via ssh. This can be done by: &lt;br /&gt;&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+#PermitRootLogin no &lt;br /&gt;
+PermitRootLogin no
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Limit the number of users that can ssh into your home machine&lt;/strong&gt; &lt;br /&gt;
+We can achieve this by adding a line into sshd_config file about allowing specific users or specific group of users to login via ssh.
+This can be done by adding this line at the end of sshd_config: &lt;br /&gt;&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+AllowUsers user1 user2
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Using ssh protocol 2&lt;/strong&gt; &lt;br /&gt;
+SSh protocol 1 has number of security vulnerabilities of which exploits are available publicly. Hence we should only use ssh protocol 2 for our purpose.
+This can be done by uncommenting the protocol line in sshd_config and mentioning the number ‘2’.&lt;/p&gt;
+
+&lt;h2 id=&quot;knowning-your-public-ip-address&quot;&gt;Knowning your public IP address&lt;/h2&gt;
+&lt;p&gt;Now that we have our SSH service running on our home machine we can move ahead on how to access your home machine from work place. The first and foremost requirement in order to achieve this is to know the Public IP of your home network. I am assuming that you have a router placed at your home to which all your devices are connected. There are many ways in order to find the Public IP of your router. The following are two of my ways:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Login into your router. &lt;br /&gt;
+ This is the most geneuine way inorder to know the details of the internet connection you are using at your home. For me the IP details were in the “Internet Port” tab of the management console.&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;[https://www.whatismyip.com/]&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;configuring-your-router&quot;&gt;Configuring your router&lt;/h2&gt;
+&lt;p&gt;We know the Public IP of our router now. Lets go ahead with some network related stuff to make this work. 
+Public IP’s are accessible from everywhere in the world. That’s why they are called Public. :)
+But your home machine is NATted behind your router. By this I mean that your router performs some kind of address translation from PrivateIP &amp;gt; PublicIP and vice versa whenever you access internet at home. You can verfiy this by checking your IP address configuration. It would be most probably start with “192.168”. Now, the question is, how will our router recognize that I want to access which device on myhome network? &lt;br /&gt;
+There are many ways to achieve this, but the first thought ways are as:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Port Forwarding&lt;/strong&gt;&lt;br /&gt;
+“A port forward is a way of making a computer on your home or business network accessible to computers on the internet, even though they are behind a router. (https://portforward.com/)”
+In order to make this work we have to login into the management console of the home router and make the configuration. 
+For me the configuration tab was in the advanced networking mode. &lt;br /&gt;
+Here you need to add: &lt;br /&gt;&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+&quot;Service Name&quot; = ssh(22) &lt;br /&gt;
+&quot;Action&quot; = Allow &lt;br /&gt;
+&quot;LAN IP Address&quot; = IP address of your home machine &lt;br /&gt;
+&quot;WAN IP Address&quot; = Any (You can spcify the public IP of y our office network to be more secure) &lt;br /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;DMZ&lt;/strong&gt;&lt;br /&gt;
+Demilitiarized Zone is a physical of logical sub-network that separates an internal local area network(LAN) from other untrusted networks, usually the Internet[http://searchsecurity.techtarget.com/definition/DMZ]. This means that the machines/servers in the DMZ are accessible from the outside network. To achieve our goal, instead of port forwarding, we can make you machine sit in the DMZ so that it will be publicly accessible. BUT, there is a big but here, as you might have guessed making your machine publicly avaible doesn’t sound much secure. You are right. It would not be secure. Hence, let’s stop this discussion here. &lt;br /&gt;
+But if anyone want to configure there machine to reside in the DMZ, you can do so by sepcifyinh your private IP into the router DMZ tab. After that the router will take care of it. (Again, I am assuming that your router supports DMZ setup)&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;dynamic-dns&quot;&gt;Dynamic DNS&lt;/h2&gt;
+&lt;p&gt;While performing port forwarding configuration when I say “IP address of your machine”, you might question that my router leases IP using DHCP. Then how can I gurantee that every time I will have the same private IP adress? True. This can be a problem all the time. But, thanks to Dynamic DNS service. Dynamic DNS is a method of autmatically updating a name server in the DNS. So basically the only thing you have to understand is that it will provide you with a constant domain name for your local machine even though it will have different IP’s. This can be configured on your router once you have the name configured using services like &lt;a href=&quot;https://www.noip.com/free&quot;&gt;noip&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;ssh-reverse-tunneling&quot;&gt;SSH Reverse tunneling&lt;/h2&gt;
+&lt;p&gt;In order to achieve the goal of bypassing corporate firewall, we use the technique of SSH Reverse Tunneling. Generally corporate firewalls are desgined to block any incoming connections from outside network. Also, for security purposes many social media websites are blocked on the firewall. But, many times a connection going from inside to outside is not blocked. Otherwise, it will be difficult to work. Right? 
+Hence, we leverage this to our advantage and in this technique we try to open a connection from inside to outside.
+In order to make a SSH reverse tunnel to your home PC use the below command:&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+ssh -R 4444:localhost:22 user@publicip
+&lt;/p&gt;
+&lt;p&gt;The -R option in above command will forward the give port on remote server to the given host and port on local side. In the above command, we use 4444 as the port on our home machine to connect back to our work machine. “user@publicip” means you are connecting to your home machine. 
+Now, from your home machine you have to connect back to the office machine using the tunnel established. This time you will be able to connect because a legitimate port is open through the corporate firewall from inside to outside.&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+ssh -p 4444 user@localhost
+&lt;/p&gt;
+&lt;p&gt;This way you are connecting back to the work machine through the tunnel.
+Now that the tunnel is established, in order to browse the blocked website we have to setup something called as SOCKS proxy on our browser. 
+In order to do so,&lt;/p&gt;
+&lt;p class=&quot;message&quot;&gt;
+open &quot;Mozilla-firefox&quot;&lt;br /&gt;
+go-to &quot;preferences&quot;&lt;br /&gt;
+click &quot;advanced&quot;&lt;br /&gt;
+&quot;Network&quot; &amp;gt; &quot;Settings&quot; &amp;gt; &quot;SOCKS Host&quot; &amp;gt; localhost: &quot;Port&quot; &amp;gt; 4444
+&lt;/p&gt;
+&lt;p&gt;Now all the traffice from this browser will get tunnel through the SSH reverse tunnel we established and will go via your home internet. 
+This will enable us to access all the blocked websites with ease.&lt;/p&gt;
+
+&lt;h2 id=&quot;ssh-reverse-tunneling-technique-is-highly-monitored-in-coportate-networks-your-coporate-it-team-might-not-like-it-please-think-twice-before-performing-this-i-have-written-this-blog-post-only-to-learn-more-about-this-technique-hope-this-helps--&quot;&gt;SSH reverse tunneling technique is highly monitored in coportate networks. Your coporate IT team might not like it. Please think twice before performing this. I have written this blog post only to learn more about this technique. Hope this helps. :) :)&lt;/h2&gt;
+
+</content>
+ </entry>
+ 
+
+</feed>
