@@ -2,8 +2,14 @@
 #
 # Use of `relative_permalinks` ensures post links from the index work properly.
 permalink:           pretty
-gems:                [jekyll-paginate]
-paginate_path:       "page:num"
+paginate:            5
+paginate_path:       "/page:num/"
+
+#External gems
+gems:
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-seo-tag
 
 # Setup
 title:               Home Page

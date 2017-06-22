@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: tejas619.github.io/sitemap.xml
