@@ -1,6 +1,7 @@
 ---
 layout: post
 title: How to SSH into home computer from Work network
+commnets: true /*disqus comments enabled for this post*/
 ---
 
 Every company has some kind of internet access policy in order to keep their network secure. According to this policy sometimes you cannot access social media websites like facebook, instagram etc. In this blog post I will guide you on how to ssh into your home computer and access blocked websites at your workplace leveraging the same. *** Violation of Company's security policy can cost you ***
