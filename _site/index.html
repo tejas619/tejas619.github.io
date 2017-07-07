@@ -141,6 +141,87 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2017/06/28/OAuth-vs-SAML/">
+        OAuth 2.0 vs SAML 2.0
+      </a>
+    </h1>
+
+    <span class="post-date">28 Jun 2017</span>
+
+    <p>“Log in with Facebook”, “Log in with Google”. I think these are the two buttons which really makes us happy whenever we see them on any application we newly install or web application we browse. The reason being, we don’t have to go through the long process of creating an account for that application OR remembering the username/password for that particular application. So how does this “Log in with Google” thing works?
+The short answer is they have implemented something called as Single-Sign On (SSO) solution. And in this blog post, I am writing about OAuth and SAML, the two specifications used in order to achieve single-sign on user experience.</p>
+
+<h2 id="saml-20-basics">SAML 2.0 Basics</h2>
+<p>Security Assertion Markup Language 2.0 is a version of SAML standard for exchanging authentication and authorization data between security domains. SAML 2.0 is an XML-based protocol that uses security based tokens containing assertions to pass information about the user between the web server you are trying to access information on and the service provider. In SAML 2.0 specification there are three main actors:</p>
+
+<ol>
+  <li>Service Provider (Resource Server): This is the web server you are trying to access information on.</li>
+  <li>Client: Your web browser</li>
+  <li>Identity Provider (Authorization Server): This is the server that owns the user credentials and identity.</li>
+</ol>
+
+<h2 id="saml-20-workflow">SAML 2.0 Workflow</h2>
+
+<p>A simple SAML workflow inorder to understand the process better can be shown as below:
+<img src="/public/saml_example.png" alt="saml_example" /></p>
+
+<p>The above example can be described in words as:</p>
+<ol>
+  <li>First I click on “login with SSO”. This is similar to clicking on login with Facebook on your web browser.</li>
+  <li>Then the application server which receives the login request generates the authentication request to be sent to the Authorization server.</li>
+  <li>Now the application server makes an HTTP Post request with an Authentication request to the authorization server.</li>
+  <li>This authentication request is then verified on the authorization server.</li>
+  <li>Now once verified, the authorization server redirects the user’s browser session on its login page.</li>
+  <li>This is where the user inserts his/her username/password for facebook (for example) on the login page.</li>
+  <li>Now if the credentials for that user are verified on authorization server (for example Facebook side), then and only then the authorization server at Facebook will generate a SAML token.</li>
+  <li>The user is now redirected to the web application with the SAML Token.</li>
+  <li>Using this SAML token the application authenticates the user using Facebook credentials and still does not store user’s username/password.</li>
+</ol>
+
+<h2 id="limitations-about-saml-20">Limitations about SAML 2.0</h2>
+<p>There are certain cases where SAML specification does not work or to be specific I should say difficult to make it work. One case is for Thick Client or Native applications. 
+Because in this case, Step 8, is difficult to achieve. In the above example Step 8 is achieved by using HTTP Redirect binding. This makes the user redirected back to the mentioned URL. However, this cannot be achieved when we are dealing with a native application installed on your machine or a mobile application installed on your phone. One harder way in order to get this working is to scrape the SAML token from the HTTP request coming from the authorization server using a proxy server in between. Once you pull out the SAML token you can make an HTTP request using this token in order to get access.</p>
+
+<h2 id="oauth-basics">OAuth Basics</h2>
+<p>Unlike SAML 2.0, OAuth 2.0 is a protocol for authorization. It focuses on how to deliver authorization flows for web applications, desktop applications, mobile phones and other devices. In OAuth there are following main actors:</p>
+<ol>
+  <li>Service Provider (Resource Server): This is the web server you are trying to access information on.</li>
+  <li>Client: It can be the browser based web application, mobile application, desktop application or even a server-side application.</li>
+  <li>Identity Provider (Authorization Server): This is the server that owns the user identities and credentials. It’s who the user actually authenticates and authorizes with.</li>
+</ol>
+
+<h2 id="oauth-workflow">OAuth Workflow</h2>
+
+<p>A simple OAuth workflow in order to understand the process better can be shown as below:
+<img src="/public/oauth_example.png" alt="oauth_example" /></p>
+<ol>
+  <li>First I click on “login with Facebook” on Spotify mobile app.</li>
+  <li>The Service Provider at Spotify gives me an authorization grant in order to login with Facebook.</li>
+  <li>Now, my mobile app will use this authorization grant in order to request an access token from the Identity Provider, in our example, Facebook.</li>
+  <li>Facebook checks whether the authorization grant is valid and grants the access token if valid. This access token is now used by the client (in our case Spotify mobile app)</li>
+  <li>Now, when Spotify (Service Provider) receives this access token, it might not directly let you access the app as logged in user. It will validate this access token again with Facebook. If Facebook finds this token valid, then and only then it will send back the user information to Spotify.</li>
+  <li>After successful validation of access token, Spotify logs in the user with his/her Facebook credentials without owning the user’s username/password.</li>
+</ol>
+
+<p>This is the most common OAuth flow. There are various other things about OAuth such as refresh tokens, where the client asks for refresh tokens to the Authorization server instead of again authenticating itself via the common OAuth flow, but I am keeping this post an introductory to Single-Sign On process.</p>
+
+<p>The difference between SAML 2.0 and OAuth 2.0 here is, OAuth does not assume that the client is a web browser.  And also in the OAuth flow, the token is sent in the HTTP redirects as the query parameter. Hence it is easy to absorb on the application side too. Other difference is SAML 2.0 has the identity information in the SAML token itself, while OAuth token does not have that. It again has to validate the token against the Identity provider which increases the request/response overhead but is more SECURE.</p>
+
+<p>This is it for now on SAML &amp; OAuth. Now that we are on this topic would just like to tell you there is something more called “OpenID Connect” similar to SAML &amp; OAuth. I will leave you here to search about it.</p>
+
+<p>References:</p>
+
+<ol>
+  <li><a href="https://tools.ietf.org/html/rfc6749#section-10">The OAuth 2.0 Authorization Framework</a></li>
+  <li><a href="https://tools.ietf.org/html/rfc7522">Security Assertion Markup Language (SAML) 2.0 Profile for OAuth 2.0 Client Authentication and Authorization Grants</a></li>
+  <li><a href="https://www.mutuallyhuman.com/blog/2013/05/09/choosing-an-sso-strategy-saml-vs-oauth2/">Choosing an SSO Strategy: SAML vs OAuth2</a></li>
+  <li><a href="https://developers.onelogin.com/saml">Dev Overview of SAML</a></li>
+</ol>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2017/06/18/reverse-ssh-to-access-internet/">
         How to SSH into home computer from Work network
       </a>
@@ -164,8 +245,9 @@ sudo apt-get install openssh-server
 
 <h2 id="securing-ssh-service">Securing SSH service</h2>
 <p>Now, we also have to secure the ssh service we just started on our machine. All the configuration related to ssh service are in the file “sshd_config”. Any changes made in this file are the changes made for the ssh service.
-You should make the following changes to implement some level of secuirty for your ssh service. (These changes are mostly generic for ssh service keeping aside the platform) <br />
-<strong>Use public/private key pairs for authentication instead of passwords</strong>
+You should make the following changes to implement some level of secuirty for your ssh service. (These changes are mostly generic for ssh service keeping aside the platform) <br /></p>
+
+<p><strong>Use public/private key pairs for authentication instead of passwords</strong>
 Generate a passphrase-protected SSH key for every computer that need access to the ssh home machine. In our case we will create this on our work machine.</p>
 <p class="message">
 ssh-keygen -t rsa -b 2048 -v 
@@ -208,7 +290,7 @@ This can be done by uncommenting the protocol line in sshd_config and mentioning
  This is the most geneuine way inorder to know the details of the internet connection you are using at your home. For me the IP details were in the “Internet Port” tab of the management console.<br /></p>
   </li>
   <li>
-    <p>[https://www.whatismyip.com/]<br /></p>
+    <p><a href="https://www.whatismyip.com/">whatismyip</a> <br /></p>
   </li>
 </ul>
 

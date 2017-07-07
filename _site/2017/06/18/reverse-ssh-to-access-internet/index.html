@@ -158,8 +158,9 @@ sudo apt-get install openssh-server
 
 <h2 id="securing-ssh-service">Securing SSH service</h2>
 <p>Now, we also have to secure the ssh service we just started on our machine. All the configuration related to ssh service are in the file “sshd_config”. Any changes made in this file are the changes made for the ssh service.
-You should make the following changes to implement some level of secuirty for your ssh service. (These changes are mostly generic for ssh service keeping aside the platform) <br />
-<strong>Use public/private key pairs for authentication instead of passwords</strong>
+You should make the following changes to implement some level of secuirty for your ssh service. (These changes are mostly generic for ssh service keeping aside the platform) <br /></p>
+
+<p><strong>Use public/private key pairs for authentication instead of passwords</strong>
 Generate a passphrase-protected SSH key for every computer that need access to the ssh home machine. In our case we will create this on our work machine.</p>
 <p class="message">
 ssh-keygen -t rsa -b 2048 -v 
@@ -202,7 +203,7 @@ This can be done by uncommenting the protocol line in sshd_config and mentioning
  This is the most geneuine way inorder to know the details of the internet connection you are using at your home. For me the IP details were in the “Internet Port” tab of the management console.<br /></p>
   </li>
   <li>
-    <p>[https://www.whatismyip.com/]<br /></p>
+    <p><a href="https://www.whatismyip.com/">whatismyip</a> <br /></p>
   </li>
 </ul>
 
@@ -263,6 +264,15 @@ This will enable us to access all the blocked websites with ease.</p>
 <div class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2017/06/28/OAuth-vs-SAML/">
+            OAuth 2.0 vs SAML 2.0
+            <small>28 Jun 2017</small>
+          </a>
+        </h3>
+      </li>
     
   </ul>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

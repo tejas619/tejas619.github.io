@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+  <title>
+    
+      OAuth 2.0 vs SAML 2.0 &middot; Home Page
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+   <!-- add description and keywords for SEO -->
+  <!-- Begin Jekyll SEO tag v2.2.3 -->
+<title>OAuth 2.0 vs SAML 2.0 | Home Page</title>
+<meta property="og:title" content="OAuth 2.0 vs SAML 2.0" />
+<meta name="author" content="Tejas Khairnar" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Understanding about how OAuth and SAML works in a Single-Sign On Solution" />
+<meta property="og:description" content="Understanding about how OAuth and SAML works in a Single-Sign On Solution" />
+<link rel="canonical" href="http://localhost:4000/2017/06/28/OAuth-vs-SAML/" />
+<meta property="og:url" content="http://localhost:4000/2017/06/28/OAuth-vs-SAML/" />
+<meta property="og:site_name" content="Home Page" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-06-28T00:00:00-07:00" />
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"BlogPosting","headline":"OAuth 2.0 vs SAML 2.0","author":{"@type":"Person","name":"Tejas Khairnar"},"datePublished":"2017-06-28T00:00:00-07:00","dateModified":"2017-06-28T00:00:00-07:00","description":"Understanding about how OAuth and SAML works in a Single-Sign On Solution","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2017/06/28/OAuth-vs-SAML/"},"url":"http://localhost:4000/2017/06/28/OAuth-vs-SAML/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta name="description" content="Understanding about how OAuth and SAML works in a Single-Sign On Solution">
+  
+ <meta name="keywords" content="oauth, saml, sso" />
+   
+</head>
+
+
+  <body class="theme-base-08">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+
+<div class="sidebar" id="sidebar">
+<div class="sidebar-logo" style="align:center">
+      <img src="http://www.gravatar.com/avatar/8c160e36fc9adedbb3a8ae40ca8c6d80?s=260" />
+  </div>
+  <div class="sidebar-item">
+    <p>I am a security enthusiast who is currently working as security engineer at Intuit. This blog post I will be using to write some tech blogs so that I can share my knowledge with the world and keep an archive for myself.</p>
+  </div>
+
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">Archive</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/projects/">Projects</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/research_projects/">Research Work</a>
+        
+      
+    
+      
+    
+
+    <a class="sidebar-nav-item" href="">GitHub project</a>
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2017. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Home Page</a>
+            <small>of The Weekend Blogger!</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">OAuth 2.0 vs SAML 2.0</h1>
+  <span class="post-date">28 Jun 2017</span>
+  <p>“Log in with Facebook”, “Log in with Google”. I think these are the two buttons which really makes us happy whenever we see them on any application we newly install or web application we browse. The reason being, we don’t have to go through the long process of creating an account for that application OR remembering the username/password for that particular application. So how does this “Log in with Google” thing works?
+The short answer is they have implemented something called as Single-Sign On (SSO) solution. And in this blog post, I am writing about OAuth and SAML, the two specifications used in order to achieve single-sign on user experience.</p>
+
+<h2 id="saml-20-basics">SAML 2.0 Basics</h2>
+<p>Security Assertion Markup Language 2.0 is a version of SAML standard for exchanging authentication and authorization data between security domains. SAML 2.0 is an XML-based protocol that uses security based tokens containing assertions to pass information about the user between the web server you are trying to access information on and the service provider. In SAML 2.0 specification there are three main actors:</p>
+
+<ol>
+  <li>Service Provider (Resource Server): This is the web server you are trying to access information on.</li>
+  <li>Client: Your web browser</li>
+  <li>Identity Provider (Authorization Server): This is the server that owns the user credentials and identity.</li>
+</ol>
+
+<h2 id="saml-20-workflow">SAML 2.0 Workflow</h2>
+
+<p>A simple SAML workflow inorder to understand the process better can be shown as below:
+<img src="/public/saml_example.png" alt="saml_example" /></p>
+
+<p>The above example can be described in words as:</p>
+<ol>
+  <li>First I click on “login with SSO”. This is similar to clicking on login with Facebook on your web browser.</li>
+  <li>Then the application server which receives the login request generates the authentication request to be sent to the Authorization server.</li>
+  <li>Now the application server makes an HTTP Post request with an Authentication request to the authorization server.</li>
+  <li>This authentication request is then verified on the authorization server.</li>
+  <li>Now once verified, the authorization server redirects the user’s browser session on its login page.</li>
+  <li>This is where the user inserts his/her username/password for facebook (for example) on the login page.</li>
+  <li>Now if the credentials for that user are verified on authorization server (for example Facebook side), then and only then the authorization server at Facebook will generate a SAML token.</li>
+  <li>The user is now redirected to the web application with the SAML Token.</li>
+  <li>Using this SAML token the application authenticates the user using Facebook credentials and still does not store user’s username/password.</li>
+</ol>
+
+<h2 id="limitations-about-saml-20">Limitations about SAML 2.0</h2>
+<p>There are certain cases where SAML specification does not work or to be specific I should say difficult to make it work. One case is for Thick Client or Native applications. 
+Because in this case, Step 8, is difficult to achieve. In the above example Step 8 is achieved by using HTTP Redirect binding. This makes the user redirected back to the mentioned URL. However, this cannot be achieved when we are dealing with a native application installed on your machine or a mobile application installed on your phone. One harder way in order to get this working is to scrape the SAML token from the HTTP request coming from the authorization server using a proxy server in between. Once you pull out the SAML token you can make an HTTP request using this token in order to get access.</p>
+
+<h2 id="oauth-basics">OAuth Basics</h2>
+<p>Unlike SAML 2.0, OAuth 2.0 is a protocol for authorization. It focuses on how to deliver authorization flows for web applications, desktop applications, mobile phones and other devices. In OAuth there are following main actors:</p>
+<ol>
+  <li>Service Provider (Resource Server): This is the web server you are trying to access information on.</li>
+  <li>Client: It can be the browser based web application, mobile application, desktop application or even a server-side application.</li>
+  <li>Identity Provider (Authorization Server): This is the server that owns the user identities and credentials. It’s who the user actually authenticates and authorizes with.</li>
+</ol>
+
+<h2 id="oauth-workflow">OAuth Workflow</h2>
+
+<p>A simple OAuth workflow in order to understand the process better can be shown as below:
+<img src="/public/oauth_example.png" alt="oauth_example" /></p>
+<ol>
+  <li>First I click on “login with Facebook” on Spotify mobile app.</li>
+  <li>The Service Provider at Spotify gives me an authorization grant in order to login with Facebook.</li>
+  <li>Now, my mobile app will use this authorization grant in order to request an access token from the Identity Provider, in our example, Facebook.</li>
+  <li>Facebook checks whether the authorization grant is valid and grants the access token if valid. This access token is now used by the client (in our case Spotify mobile app)</li>
+  <li>Now, when Spotify (Service Provider) receives this access token, it might not directly let you access the app as logged in user. It will validate this access token again with Facebook. If Facebook finds this token valid, then and only then it will send back the user information to Spotify.</li>
+  <li>After successful validation of access token, Spotify logs in the user with his/her Facebook credentials without owning the user’s username/password.</li>
+</ol>
+
+<p>This is the most common OAuth flow. There are various other things about OAuth such as refresh tokens, where the client asks for refresh tokens to the Authorization server instead of again authenticating itself via the common OAuth flow, but I am keeping this post an introductory to Single-Sign On process.</p>
+
+<p>The difference between SAML 2.0 and OAuth 2.0 here is, OAuth does not assume that the client is a web browser.  And also in the OAuth flow, the token is sent in the HTTP redirects as the query parameter. Hence it is easy to absorb on the application side too. Other difference is SAML 2.0 has the identity information in the SAML token itself, while OAuth token does not have that. It again has to validate the token against the Identity provider which increases the request/response overhead but is more SECURE.</p>
+
+<p>This is it for now on SAML &amp; OAuth. Now that we are on this topic would just like to tell you there is something more called “OpenID Connect” similar to SAML &amp; OAuth. I will leave you here to search about it.</p>
+
+<p>References:</p>
+
+<ol>
+  <li><a href="https://tools.ietf.org/html/rfc6749#section-10">The OAuth 2.0 Authorization Framework</a></li>
+  <li><a href="https://tools.ietf.org/html/rfc7522">Security Assertion Markup Language (SAML) 2.0 Profile for OAuth 2.0 Client Authentication and Authorization Grants</a></li>
+  <li><a href="https://www.mutuallyhuman.com/blog/2013/05/09/choosing-an-sso-strategy-saml-vs-oauth2/">Choosing an SSO Strategy: SAML vs OAuth2</a></li>
+  <li><a href="https://developers.onelogin.com/saml">Dev Overview of SAML</a></li>
+</ol>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2017/06/18/reverse-ssh-to-access-internet/">
+            How to SSH into home computer from Work network
+            <small>18 Jun 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<h3 class="share-this">Share this!</h3>
+<div id="share-box"> 
+       
+        <a href="https://twitter.com/intent/tweet?text=OAuth 2.0 vs SAML 2.0&url=http://localhost:4000/2017/06/28/OAuth-vs-SAML/" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter fa share-button"></i></a>
+       
+        <a href="http://www.reddit.com/submit?url=http://localhost:4000/2017/06/28/OAuth-vs-SAML/" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-reddit fa share-button"></i></a>
+       <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2017/06/28/OAuth-vs-SAML/&title=OAuth 2.0 vs SAML 2.0&summary=Understanding about how OAuth and SAML works in a Single-Sign On Solution&source=webjeda" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa share-linkedin fa-linkedin fa share-button"></i></a>                         
+        <a href="mailto:?subject=OAuth 2.0 vs SAML 2.0&amp;body=Check out this site http://localhost:4000/2017/06/28/OAuth-vs-SAML/"><i class="fa fa-envelope fa share-button"></i></a>                                  
+</div>
+</div>
+
+        
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "https-tejas619-github-io";
+    var disqus_identifier = "/2017/06/28/OAuth-vs-SAML/";
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+    
+  </body>
+</html>

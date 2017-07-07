@@ -23,6 +23,7 @@ Just follow the instructions and OpenSSH-server will be installed on your linux 
 ## Securing SSH service
 Now, we also have to secure the ssh service we just started on our machine. All the configuration related to ssh service are in the file "sshd_config". Any changes made in this file are the changes made for the ssh service.
 You should make the following changes to implement some level of secuirty for your ssh service. (These changes are mostly generic for ssh service keeping aside the platform) <br>
+
 **Use public/private key pairs for authentication instead of passwords**
 Generate a passphrase-protected SSH key for every computer that need access to the ssh home machine. In our case we will create this on our work machine.
 <p class="message">
@@ -63,7 +64,7 @@ Now that we have our SSH service running on our home machine we can move ahead o
 *  Login into your router. <br>
 	This is the most geneuine way inorder to know the details of the internet connection you are using at your home. For me the IP details were in the "Internet Port" tab of the management console.<br> 
 
-*  [https://www.whatismyip.com/]<br>
+*  [whatismyip](https://www.whatismyip.com/) <br>
 
 ## Configuring your router
 We know the Public IP of our router now. Lets go ahead with some network related stuff to make this work. 
